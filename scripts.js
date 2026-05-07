@@ -1,4 +1,3 @@
-const apiKey = "81e7fd3223321811fffe635d0283d342";
 const apiURL = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
 
 const searchBox = document.querySelector('.search input');
@@ -6,13 +5,16 @@ const searchBtn = document.querySelector('.search button');
 const icon = document.querySelector('.weather-icon');
 
 
-
-
 async function checkWeather(city) {
-  const response = await fetch(apiURL + city + `&appid=${apiKey}`);
+  const response = await fetch(apiURL + city + `&appid=${APIKey}`);
   var data = await response.json();
 
   console.log(data);
+
+  if (data.cod === "404") {
+    alert("City not found");
+    return;
+  } 
 
   document.querySelector('.city').innerHTML = data.name;
   document.querySelector('.temp').innerHTML = Math.round(data.main.temp) + '°C';
